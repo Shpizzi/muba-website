@@ -48,7 +48,7 @@ function Overlay({ close }: { close: () => void }) {
         <ul className="border-r-[1.5px] border-black pl-gutter py-[125px] flex flex-col justify-between">
           {menu.map((s, i) => (
             <li key={s.to} className="relative h-[76px] w-fit whitespace-nowrap">
-              {i === attivo && <img src="/assets/menu/scarabocchio.svg" alt="" aria-hidden className="absolute left-0 top-[24px] w-full h-[40px]" preserveAspectRatio="none" />}
+              {i === attivo && <img src="/assets/menu/scarabocchio.svg" alt="" aria-hidden className="absolute left-0 top-[24px] w-full h-[40px]" />}
               <Link to={s.to} onMouseEnter={() => setAttivo(i)} onFocus={() => setAttivo(i)}
                 className="relative inline-block font-mostra font-bold uppercase text-[76px] leading-none tracking-[-0.02em]">
                 {s.label}
