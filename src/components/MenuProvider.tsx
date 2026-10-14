@@ -14,7 +14,7 @@ const partner = [
 ]
 
 // Cella della navbar: identica in Header e nell'overlay del menu, così si sovrappongono al pixel
-export const cell = 'h-full flex items-center gap-[9.55px] px-6 border-l-[1.5px] border-black font-mostra font-bold uppercase text-[22.9px] hover:bg-black/5 active:bg-black/10'
+export const cell = 'h-full flex items-center gap-[9.55px] px-6 border-l-[1.5px] border-black font-mostra font-normal uppercase text-[22.9px] hover:bg-black/5 active:bg-black/10'
 
 function Overlay({ close }: { close: () => void }) {
   const [attivo, setAttivo] = useState(0)

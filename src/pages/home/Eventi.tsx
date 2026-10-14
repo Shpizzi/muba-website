@@ -11,7 +11,7 @@ const eventi: Ev[] = [
 function Card({ e }: { e: Ev }) {
   return (
     <article className={`relative flex flex-col gap-5 ${e.wide ? 'w-[610.93px]' : (e.sx < 150 ? 'w-[294.98px]' : 'w-[299.87px]')}`}>
-      <div className={`bg-white p-[15px] ${e.wide ? 'h-[298px]' : 'aspect-square'}`}>
+      <div className={`stamp bg-white p-[15px] ${e.wide ? 'h-[298px]' : 'aspect-square'}`}>
         <img src={`/assets/home/${e.img}`} alt="" className="size-full object-cover" />
       </div>
       <img src={`/assets/home/sticker-${e.sticker}.webp`} alt="" className="absolute -translate-x-1/2 -translate-y-1/2 h-9 bg-white px-2" style={{ left: e.sx, top: e.sy }} />

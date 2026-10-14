@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="absolute left-[100px] top-[296px] flex flex-col gap-6 items-start">
         <div className="w-[608px] flex flex-col gap-8">
           <p className="flex items-center gap-2 t-md">
-            <i className="size-4 rounded-full bg-green" />
+            <i className="size-4 rounded-full bg-green live-dot" />
             Aperto ancora per 1 ora e 30 minuti. <a href="#" className="underline">Scopri gli orari</a>
           </p>
           <div className="flex flex-col gap-[18px]">

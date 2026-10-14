@@ -78,7 +78,7 @@ html { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
 
 /* Scroll: ancore morbide, comparsa on scroll, stati dei controlli */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; transition: none; } }
@@ -87,14 +87,35 @@ a, button { transition: background-color .15s, color .15s, border-color .15s, op
 button:not(:disabled):active, a[class*="border"]:active { opacity: .8; }
 
 /* Pagine boxate: sfondo e bordi di header, footer e sezioni a colore escono a tutta larghezza dello schermo */
-:where(.page-box > header, .page-box > footer, .page-box > main > *, .page-box > main > * > :is(.bg-black, .bg-red, .bg-green):not(.no-bleed)) { position: relative; isolation: isolate; }
-:is(.page-box > header, .page-box > footer, .page-box > main > *, .page-box > main > * > :is(.bg-black, .bg-red, .bg-green):not(.no-bleed))::before {
+:where(.page-box > header, .page-box > footer, .page-box > main > *:not(.absolute), .page-box > main > * > :is(.bg-black, .bg-red, .bg-green):not(.no-bleed)) { position: relative; isolation: isolate; }
+:is(.page-box > header, .page-box > footer, .page-box > main > *:not(.absolute), .page-box > main > * > :is(.bg-black, .bg-red, .bg-green):not(.no-bleed))::before {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
   inset: -1.5px calc(50% - 50vw); background: inherit; border: inherit; box-sizing: border-box;
 }
 /* l'overflow-hidden delle sezioni tagliava lo sfondo a tutta larghezza: clip solo in verticale */
-:is(.page-box > header, .page-box > footer, .page-box > main > *, .page-box > main > * > :is(.bg-black, .bg-red, .bg-green):not(.no-bleed)):is(.overflow-hidden, .overflow-clip) { overflow-x: visible; overflow-y: clip; }
+:is(.page-box > header, .page-box > footer, .page-box > main > *:not(.absolute), .page-box > main > * > :is(.bg-black, .bg-red, .bg-green):not(.no-bleed)):is(.overflow-hidden, .overflow-clip) { overflow-x: visible; overflow-y: clip; }
 
 /* foto/sfondi hero (img o overlay con inset-0) a tutta larghezza; le sezioni clippano solo in verticale */
 .page-box > main > section.overflow-hidden { overflow-x: visible; overflow-y: clip; }
 .page-box > main > section > :is(img, span)[class~="inset-0"] { left: calc(50% - 50vw); right: auto; width: 100vw; max-width: none; }
+
+/* Pallino "aperto": glow che pulsa piano */
+@keyframes live-glow { 0%,100% { box-shadow: 0 0 0 0 rgb(4 114 77 / .55); } 50% { box-shadow: 0 0 8px 4px rgb(4 114 77 / .25); } }
+.live-dot { animation: live-glow 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+
+/* Effetto francobollo: bordo dentellato */
+.stamp {
+  --r: 4px; --s: 12px;
+  -webkit-mask: radial-gradient(circle var(--r) at 50% 0, #0000 96%, #000) 0 0 / var(--s) 100% repeat-x, radial-gradient(circle var(--r) at 50% 100%, #0000 96%, #000) 0 0 / var(--s) 100% repeat-x, radial-gradient(circle var(--r) at 0 50%, #0000 96%, #000) 0 0 / 100% var(--s) repeat-y, radial-gradient(circle var(--r) at 100% 50%, #0000 96%, #000) 0 0 / 100% var(--s) repeat-y;
+  -webkit-mask-composite: source-in;
+  mask: radial-gradient(circle var(--r) at 50% 0, #0000 96%, #000) 0 0 / var(--s) 100% repeat-x, radial-gradient(circle var(--r) at 50% 100%, #0000 96%, #000) 0 0 / var(--s) 100% repeat-x, radial-gradient(circle var(--r) at 0 50%, #0000 96%, #000) 0 0 / 100% var(--s) repeat-y, radial-gradient(circle var(--r) at 100% 50%, #0000 96%, #000) 0 0 / 100% var(--s) repeat-y;
+  mask-composite: intersect;
+}
+
+/* Scroll-driven: la striscia orizzontale segue lo scroll sul compositor (niente scatti) */
+@keyframes track-x { to { transform: translate3d(calc(var(--dist) * -1px), 0, 0) scale(var(--s)); } }
+.track-driven { animation: track-x 1s linear both; animation-timeline: scroll(root block); }
+
+/* Navbar sticky che si nasconde scendendo e torna risalendo */
+.nav-hide { transform: translateY(-100%); }

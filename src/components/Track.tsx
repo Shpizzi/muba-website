@@ -23,12 +23,17 @@ export default function Track({ width, stops = [], children }: { width: number; 
     let dir = 1
     let timer: number | undefined
     const pos = (st: Stop) => Math.max(0, st.at * s - (st.align === 'end' ? window.innerWidth : st.align === 'center' ? window.innerWidth / 2 : 0))
-    const apply = () => { track.current!.style.transform = `translate3d(${-window.scrollY}px,0,0) scale(${s})` }
+    // CSS scroll-driven animation (compositor): la striscia resta incollata allo scroll, senza scatti. Fallback JS sul scroll event.
+    const driven = CSS.supports('animation-timeline: scroll()')
+    const el = track.current!
+    if (driven) el.classList.add('track-driven')
+    const apply = () => { if (!driven) el.style.transform = `translate3d(${-window.scrollY}px,0,0) scale(${s})` }
     const layout = () => {
       let dist = Math.max(0, width * s - window.innerWidth)
       // lock: la pagina è alta solo fino al punto bloccato, il browser non lascia scrollare oltre
       for (const st of stopsRef.current) if (st.lock) dist = Math.min(dist, pos(st))
       outer.current!.style.height = `${dist + window.innerHeight}px`
+      el.style.setProperty('--dist', String(dist)); el.style.setProperty('--s', String(s))
       apply()
     }
     const onResize = () => {
@@ -65,7 +70,7 @@ export default function Track({ width, stops = [], children }: { width: number; 
     const onWheel = (e: WheelEvent) => { if (anim && (Math.abs(e.deltaY) >= 50 || Math.sign(e.deltaY) !== dir)) stopAnim() }
     window.addEventListener('wheel', onWheel, { passive: true })
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => { window.removeEventListener('resize', onResize); window.removeEventListener('scroll', onScroll); window.clearTimeout(timer); stopAnim(); window.removeEventListener('wheel', onWheel); inputs.forEach(n => window.removeEventListener(n, stopAnim)) }
+    return () => { window.removeEventListener('resize', onResize); window.removeEventListener('scroll', onScroll); window.clearTimeout(timer); stopAnim(); window.removeEventListener('wheel', onWheel); el.classList.remove('track-driven'); inputs.forEach(n => window.removeEventListener(n, stopAnim)) }
   }, [width, lockKey])
 
   return (

@@ -1,6 +1,5 @@
 import Button from '../components/Button'
 import Layout from '../components/Layout'
-import ApertoLine from '../components/ApertoLine'
 
 const a = (p: string) => `/assets/membership/${p}`
 
@@ -58,7 +57,6 @@ export default function Membership() {
     <Layout>
       <main>
         <section className="px-gutter pt-[98px] pb-[70px] flex flex-col gap-3">
-          <ApertoLine />
           <h1 className="font-mostra font-bold uppercase text-[min(236px,16.4vw)] leading-[0.97] whitespace-nowrap">Membership</h1>
           <p className="t-lg max-w-[1241px]">
             Diventare parte del Museo della Bonifica di Arborea vuol dire sentirsi di casa. Significa entrare in una comunità che crede nel valore della storia, del lavoro condiviso e della memoria di questo territorio.
@@ -75,8 +73,10 @@ export default function Membership() {
         <Section id="patron" titolo="Patron" tiers={patron} />
 
         <section className="mx-auto mt-[14px] w-[1239px] max-w-[calc(100%-200px)] h-[477px] relative border-[1.5px] border-black">
-          <img src={a('dona-bg-4d24b5.webp')} alt="" className="absolute inset-0 size-full object-cover" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(43,43,43,0)_0%,#2b2b2b_100%)]" />
+          <div className="absolute inset-0 overflow-hidden">
+            <img src={a('dona-bg-4d24b5.webp')} alt="" className="absolute inset-0 size-full object-cover" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(43,43,43,0)_0%,#2b2b2b_100%)]" />
+          </div>
           <div className="absolute inset-0 p-[30px] flex flex-col justify-end items-start gap-6 text-beige">
             <h2 className="h2">Sostienici e dona al museo</h2>
             <Button href="#">Dona ‘na olta</Button>

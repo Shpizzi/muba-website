@@ -5,6 +5,7 @@ import Track, { Slide } from '../components/Track'
 import FooterSlide from '../components/FooterSlide'
 import ApertoLine from '../components/ApertoLine'
 import Deco from '../components/Deco'
+import Marquee from './home/Marquee'
 
 type Mostra = { img: string; titolo: string; data?: string; testo: string; cta: string }
 const img = (p: string) => `/assets/mostre-temporanee/${p}.webp`
@@ -71,11 +72,7 @@ export default function MostreTemporanee() {
             {altri.map(([t, to]) => <Link key={t} to={to} className={link}><span>{t}</span><span aria-hidden>→</span></Link>)}
           </div>
         </Slide>
-        <Slide x={2252} w={180} className="z-10 bg-beige border-x-[1.5px] border-black overflow-hidden">
-          <Link to="/gli-eventi" aria-label="Nuove mostre presto disponibili" className="absolute inset-0 flex items-center justify-center hover:bg-black hover:text-beige transition-colors">
-            <p className="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-mostra font-extrabold uppercase text-[100px] leading-none">nuove mostre presto disponibili</p>
-          </Link>
-        </Slide>
+        <Marquee x={2252} text="Nuove mostre presto disponibili" to="/gli-eventi" />
         <FooterSlide x={5119} light />
       </Track>
     </>
